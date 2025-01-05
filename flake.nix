@@ -2,9 +2,8 @@
   description = "Dan's latest dotfiles flake";
   # TODO
   # fonts not working in Zed
-  # homebrew applications - add zap feature
-  # darwin macOS settings
   # check for others to migrate from dotfiles
+  # Alfred setup
 
   inputs = {
     # nixpkgs
@@ -34,15 +33,20 @@
           environment.systemPackages = with pkgs; [
             anonymousPro
             coreutils
+            curl
             helix
             jq
             kitty
+            mas
             nil
             nixd
             nixfmt-rfc-style
             powerline-symbols
+            ripgrep
             vim
+            wget
             zed-editor
+            uv
           ];
           fonts.packages = with pkgs; [
             anonymousPro
