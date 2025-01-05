@@ -27,7 +27,6 @@
         { pkgs, config, ... }:
         {
           environment.systemPackages = with pkgs; [
-            anonymousPro
             coreutils
             curl
             helix
@@ -37,7 +36,6 @@
             nil
             nixd
             nixfmt-rfc-style
-            powerline-symbols
             ripgrep
             vim
             wget
