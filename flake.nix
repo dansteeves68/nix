@@ -1,13 +1,35 @@
 {
   description = "Dan's latest dotfiles flake";
   # TODO
-  # faster completions
-  # homebrew applications
+  # fonts not working in Zed
+  # homebrew applications - add zap feature
+  # darwin macOS settings
+  # check for others to migrate from dotfiles
 
   inputs = {
+    # nixpkgs
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+    # nix-darwin
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    # homebrew
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    homebrew-bundle = {
+      url = "github:homebrew/homebrew-bundle";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+
+    # home manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -17,26 +39,49 @@
       self,
       home-manager,
       nix-darwin,
+      nix-homebrew,
+      homebrew-bundle,
+      homebrew-cask,
+      homebrew-core,
       nixpkgs,
       ...
     }:
     let
+      # nix darwin
       configuration =
         { pkgs, config, ... }:
         {
           environment.systemPackages = with pkgs; [
+            anonymousPro
+            coreutils
             helix
             jq
             kitty
             nil
             nixd
             nixfmt-rfc-style
+            powerline-symbols
             vim
             zed-editor
           ];
           fonts.packages = with pkgs; [
             anonymousPro
+            powerline-symbols
           ];
+          homebrew = {
+            casks = [
+              "1password"
+              "alfred"
+              "fantastical"
+              "marked"
+              "moom"
+              "multiviewer-for-f1"
+              "netnewswire"
+              "soulver"
+              "steermouse"
+              "zoom"
+            ];
+          };
           nix.settings.experimental-features = "nix-command flakes";
           nixpkgs.hostPlatform = "x86_64-darwin";
           programs.bash.enable = true;
@@ -50,7 +95,6 @@
               cp -r "$src" /Applications/Nix\ Apps
             done
           '';
-
           system.configurationRevision = self.rev or self.dirtyRev or null;
           system.stateVersion = 5;
           users.users = {
@@ -61,11 +105,12 @@
             };
           };
         };
+      # home manager
       home =
-        { pkgs, ... }:
+        { ... }:
         {
           fonts.fontconfig.enable = true;
-          home.packages = with pkgs; [ ];
+          home.packages = [ ];
           home.sessionVariables = {
             EDITOR = "hx";
             VISUAL = "zeditor";
@@ -104,8 +149,11 @@
                 caseSensitive = false;
                 color = true;
                 editor.keymap = "vi";
-                prompt.theme = "steeef";
+                prompt.theme = "powerline";
+                ssh.identities = [ ];
+                terminal.tabTitleFormat = "%m: %s";
               };
+              # syntaxHighlighting.enable = true;
             };
           };
         };
@@ -122,6 +170,14 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.dan = home;
+          }
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              autoMigrate = true;
+              enable = true;
+              user = "dan";
+            };
           }
         ];
       };
