@@ -22,5 +22,6 @@
     "mode": "system",
     "light": "Atelier Sulphurpool Light",
     "dark": "Atelier Sulphurpool Dark"
-  }
+  },
+  "languages": { "Nix": { "formatter": "foo" } }
 }

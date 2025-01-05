@@ -1,10 +1,8 @@
 {
   description = "Dan's latest dotfiles flake";
   # TODO
-  # link GUI Applications for Spotlight/Alfred
-  # warning: /Applications/Nix Apps is not owned by nix-darwin, skipping App linking...
   # faster completions
-  # link .config folders
+  # homebrew applications
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -29,6 +27,9 @@
           environment.systemPackages = with pkgs; [
             helix
             kitty
+            nil
+            nixd
+            nixfmt-rfc-style
             vim
             zed-editor
           ];
@@ -63,10 +64,7 @@
         { pkgs, ... }:
         {
           fonts.fontconfig.enable = true;
-          home.packages = with pkgs; [
-            nixfmt-rfc-style
-            uv
-          ];
+          home.packages = with pkgs; [ ];
           home.sessionVariables = {
             EDITOR = "hx";
             VISUAL = "zeditor";
