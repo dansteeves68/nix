@@ -7,6 +7,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "base_keymap": "SublimeText",
   "ui_font_size": 16,
   "buffer_font_size": 16,
   "terminal": {
@@ -15,6 +16,6 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "One Dark"
+    "dark": "Atelier Sulphurpool Dark"
   }
 }

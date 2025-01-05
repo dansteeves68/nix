@@ -1,5 +1,10 @@
 {
   description = "Dan's latest dotfiles flake";
+  # TODO
+  # prompt
+  # faster completions
+  # link .config folders
+  # link GUI Applications for Spotlight/Alfred
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -23,7 +28,7 @@
         {
           # List packages installed in system profile. To search by name, run:
           # $ nix-env -qaP | grep wget
-          environment.systemPackages = with pkgs; [ kitty vim zed-editor ];
+          environment.systemPackages = with pkgs; [ vim ];
 
           # Necessary for using flakes on this system.
           nix.settings.experimental-features = "nix-command flakes";
@@ -31,26 +36,6 @@
           # Enable alternative shell support in nix-darwin.
           programs.bash.enable = true;
           programs.zsh.enable = true;
-
-          system.activationScripts.applications.text = let
-            env = pkgs.buildEnv {
-            name = "system-applications";
-            paths = config.environment.systemPackages;
-            pathsToLink = "/Applications";
-          };
-          in
-            pkgs.lib.mkForce ''
-              # Set up applications.
-              echo "setting up /Applications..." >&2
-              rm -rf /Applications/Nix\ Apps
-              mkdir -p /Applications/Nix\ Apps
-              find ${env}/Applications -maxdepth 1 -type l -exec readlink '{}' + |
-              while read -r src; do
-                app_name=$(basename "$src")
-                echo "copying $src" >&2
-                ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
-              done
-            '';
 
           # Set Git commit hash for darwin-version.
           system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -96,9 +81,9 @@
             };
 
             helix.enable = true;
-            # kitty.enable = true;
+            kitty.enable = true;
 
-            # zed-editor.enable = true;
+            zed-editor.enable = true;
 
             zsh = {
               enable = true;
