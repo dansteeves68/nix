@@ -26,6 +26,7 @@
         {
           environment.systemPackages = with pkgs; [
             helix
+            jq
             kitty
             nil
             nixd
