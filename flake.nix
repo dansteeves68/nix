@@ -27,7 +27,11 @@
       configuration =
         { pkgs, config, ... }:
         {
-          environment.systemPackages = with pkgs; [ vim ];
+          environment.systemPackages = with pkgs; [
+            kitty
+            vim
+            zed-editor
+          ];
           fonts.packages = with pkgs; [
             anonymousPro
           ];
@@ -35,6 +39,16 @@
           nixpkgs.hostPlatform = "x86_64-darwin";
           programs.bash.enable = true;
           programs.zsh.enable = true;
+          system.activationScripts.applications.text = ''
+            echo "setting up /Applications/Nix Apps..." >&2
+            rm -rf /Applications/Nix\ Apps
+            mkdir -p /Applications/Nix\ Apps
+            find ${config.system.build.applications}/Applications -maxdepth 1 -type l | while read -r app; do
+              src="$(/usr/bin/stat -f%Y "$app")"
+              cp -r "$src" /Applications/Nix\ Apps
+            done
+          '';
+
           system.configurationRevision = self.rev or self.dirtyRev or null;
           system.stateVersion = 5;
           users.users = {
