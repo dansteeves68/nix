@@ -1,7 +1,6 @@
 {
   description = "Dan's latest dotfiles flake";
   # TODO
-  # kitty config overwritten
   # link GUI Applications for Spotlight/Alfred
   # warning: /Applications/Nix Apps is not owned by nix-darwin, skipping App linking...
   # faster completions
@@ -28,6 +27,7 @@
         { pkgs, config, ... }:
         {
           environment.systemPackages = with pkgs; [
+            helix
             kitty
             vim
             zed-editor
@@ -67,6 +67,10 @@
             nixfmt-rfc-style
             uv
           ];
+          home.sessionVariables = {
+            EDITOR = "hx";
+            VISUAL = "zeditor";
+          };
           home.stateVersion = "24.11";
           programs = {
             home-manager.enable = true;
@@ -80,10 +84,6 @@
               userEmail = "dan@thesteeves.org";
               userName = "dansteeves68";
             };
-            helix.enable = true;
-            kitty.enable = true;
-            zed-editor.enable = true;
-            zed-editor.extraPackages = with pkgs; [ nixd ];
             zsh = {
               enable = true;
               autocd = true;
