@@ -104,28 +104,27 @@
             stealthenabled = 1;
           };
           system.defaults.dock = {
-            appswitcher-all-displays = false; # Whether to display the appswitcher on all displays or only the main one. The default is false.
-            autohide = true; # Whether to automatically hide and show the dock.
-            autohide-delay = 0.1; # Sets the speed of the autohide delay. The default is
-            autohide-time-modifier = 0.5; # Sets the speed of the animation when hiding/showing the Dock. The default is given in the example.
-            dashboard-in-overlay = false; # Whether to hide Dashboard as a Space. The default is false.
-            enable-spring-load-actions-on-all-items = false; # Enable spring loading for all Dock items. The default is false.
-            expose-group-apps = false; # Whether to group windows by application in Mission Control's Exposé. The default is true.
-            launchanim = false; # Animate opening applications from the Dock. The default is true.
-            mineffect = null; # Set the minimize/maximize window effect. The default is genie.
-            minimize-to-application = false; # Whether to minimize windows into their application icon. The default is false.
-            mouse-over-hilite-stack = false; # Enable highlight hover effect for the grid view of a stack in the Dock.
-            mru-spaces = true; # Whether to automatically rearrange spaces based on most recent use. The default is true.
-            orientation = "bottom"; # Position of the dock on screen. The default is "bottom".
+            appswitcher-all-displays = false;
+            autohide = true;
+            autohide-delay = 0.1;
+            autohide-time-modifier = 0.5;
+            dashboard-in-overlay = false;
+            enable-spring-load-actions-on-all-items = false;
+            expose-group-apps = false;
+            launchanim = false;
+            mineffect = null;
+            minimize-to-application = false;
+            mouse-over-hilite-stack = false;
+            mru-spaces = true;
+            orientation = "bottom";
             show-process-indicators = true;
             show-recents = false;
-            showhidden = false; # Whether to make icons of hidden applications tranclucent. The default is false.
-            # static-only = true; # Show only open applications in the Dock
-            tilesize = 64; # Size of the icons in the dock. The default is 64.
-            wvous-bl-corner = 1; # Hot corner action 1 Disabled
-            wvous-br-corner = 1; # Hot corner action 1 Disabled
-            wvous-tl-corner = 4; # Hot corner action 4 Desktop
-            wvous-tr-corner = 1; # Hot corner action 1 Disabled
+            showhidden = false;
+            tilesize = 64;
+            wvous-bl-corner = 1;
+            wvous-br-corner = 1;
+            wvous-tl-corner = 4;
+            wvous-tr-corner = 1;
           };
           system.defaults.finder = {
             AppleShowAllExtensions = true;
@@ -227,6 +226,7 @@
             };
           };
         };
+
     in
     {
       # Build darwin flake using:
@@ -241,19 +241,6 @@
             home-manager.useUserPackages = true;
             home-manager.users.dan = home;
           }
-          # nix-homebrew.darwinModules.nix-homebrew
-          # {
-          #   nix-homebrew = {
-          #     autoMigrate = true;
-          #     enable = true;
-          #     onActivation = {
-          #       autoUpdate = true;
-          #       cleanup = "zap";
-          #       upgrade = true;
-          #     };
-          #     user = "dan";
-          #   };
-          # }
         ];
       };
     };
