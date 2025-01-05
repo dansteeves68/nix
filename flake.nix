@@ -14,36 +14,16 @@
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    # homebrew
-    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
-    homebrew-bundle = {
-      url = "github:homebrew/homebrew-bundle";
-      flake = false;
-    };
-    homebrew-cask = {
-      url = "github:homebrew/homebrew-cask";
-      flake = false;
-    };
-    homebrew-core = {
-      url = "github:homebrew/homebrew-core";
-      flake = false;
-    };
-
     # home manager
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
-    inputs@{
+    {
       self,
       home-manager,
       nix-darwin,
-      nix-homebrew,
-      homebrew-bundle,
-      homebrew-cask,
-      homebrew-core,
-      nixpkgs,
       ...
     }:
     let
@@ -69,9 +49,14 @@
             powerline-symbols
           ];
           homebrew = {
+            onActivation.autoUpdate = true;
+            onActivation.cleanup = "zap";
+            onActivation.upgrade = true;
+            enable = true;
             casks = [
               "1password"
               "alfred"
+              "discord"
               "fantastical"
               "marked"
               "moom"
@@ -81,11 +66,17 @@
               "steermouse"
               "zoom"
             ];
+            taps = [
+              "homebrew/services"
+              "nrlquaker/createzap"
+            ];
           };
+          nix.optimise.automatic = true;
           nix.settings.experimental-features = "nix-command flakes";
           nixpkgs.hostPlatform = "x86_64-darwin";
           programs.bash.enable = true;
           programs.zsh.enable = true;
+          security.pam.enableSudoTouchIdAuth = true;
           system.activationScripts.applications.text = ''
             echo "setting up /Applications/Nix Apps..." >&2
             rm -rf /Applications/Nix\ Apps
@@ -95,7 +86,81 @@
               cp -r "$src" /Applications/Nix\ Apps
             done
           '';
+          system.activationScripts.postUserActivation.text = ''
+            # Following line should allow us to avoid a logout/login cycle
+            /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+            # Note when working on Dock enable this line or run manually after switch
+            # killall Dock
+          '';
           system.configurationRevision = self.rev or self.dirtyRev or null;
+          system.defaults.alf = {
+            globalstate = 1;
+            allowsignedenabled = 1;
+            allowdownloadsignedenabled = 1;
+            stealthenabled = 1;
+          };
+          system.defaults.dock = {
+            appswitcher-all-displays = false; # Whether to display the appswitcher on all displays or only the main one. The default is false.
+            autohide = true; # Whether to automatically hide and show the dock.
+            autohide-delay = 0.1; # Sets the speed of the autohide delay. The default is
+            autohide-time-modifier = 0.5; # Sets the speed of the animation when hiding/showing the Dock. The default is given in the example.
+            dashboard-in-overlay = false; # Whether to hide Dashboard as a Space. The default is false.
+            enable-spring-load-actions-on-all-items = false; # Enable spring loading for all Dock items. The default is false.
+            expose-group-apps = false; # Whether to group windows by application in Mission Control's Exposé. The default is true.
+            launchanim = false; # Animate opening applications from the Dock. The default is true.
+            mineffect = null; # Set the minimize/maximize window effect. The default is genie.
+            minimize-to-application = false; # Whether to minimize windows into their application icon. The default is false.
+            mouse-over-hilite-stack = false; # Enable highlight hover effect for the grid view of a stack in the Dock.
+            mru-spaces = true; # Whether to automatically rearrange spaces based on most recent use. The default is true.
+            orientation = "bottom"; # Position of the dock on screen. The default is "bottom".
+            show-process-indicators = true;
+            show-recents = false;
+            showhidden = false; # Whether to make icons of hidden applications tranclucent. The default is false.
+            # static-only = true; # Show only open applications in the Dock
+            tilesize = 64; # Size of the icons in the dock. The default is 64.
+            wvous-bl-corner = 1; # Hot corner action 1 Disabled
+            wvous-br-corner = 1; # Hot corner action 1 Disabled
+            wvous-tl-corner = 4; # Hot corner action 4 Desktop
+            wvous-tr-corner = 1; # Hot corner action 1 Disabled
+          };
+          system.defaults.finder = {
+            AppleShowAllExtensions = true;
+            AppleShowAllFiles = true;
+            CreateDesktop = false; # Whether to show icons on the desktop or not.
+            FXEnableExtensionChangeWarning = true;
+            FXPreferredViewStyle = "Nlsv";
+            ShowPathbar = true;
+            ShowStatusBar = false;
+            QuitMenuItem = true;
+          };
+          system.defaults.loginwindow = {
+            GuestEnabled = false;
+            DisableConsoleAccess = true;
+          };
+          system.defaults.screencapture.location = "~/Screenshots/";
+          system.defaults.spaces.spans-displays = false;
+          system.defaults.trackpad = {
+            Clicking = true; # true to enable tap-to-click
+            TrackpadRightClick = true;
+          };
+          system.defaults.NSGlobalDomain = {
+            # "com.apple.trackpad.scaling" = 3.0;
+            AppleInterfaceStyleSwitchesAutomatically = true;
+            # AppleMeasurementUnits = "Centimeters";
+            # AppleMetricUnits = 1;
+            AppleShowScrollBars = "Automatic";
+            # AppleTemperatureUnit = "Celsius";
+            InitialKeyRepeat = 15;
+            KeyRepeat = 2;
+            NSAutomaticCapitalizationEnabled = false;
+            NSAutomaticDashSubstitutionEnabled = false;
+            NSAutomaticPeriodSubstitutionEnabled = false;
+            _HIHideMenuBar = false;
+          };
+          system.keyboard = {
+            enableKeyMapping = true;
+            remapCapsLockToEscape = true;
+          };
           system.stateVersion = 5;
           users.users = {
             dan = {
@@ -113,6 +178,7 @@
           home.packages = [ ];
           home.sessionVariables = {
             EDITOR = "hx";
+            HOMEBREW_AUTO_UPDATE_SECS = 50000;
             VISUAL = "zeditor";
           };
           home.stateVersion = "24.11";
@@ -171,14 +237,19 @@
             home-manager.useUserPackages = true;
             home-manager.users.dan = home;
           }
-          nix-homebrew.darwinModules.nix-homebrew
-          {
-            nix-homebrew = {
-              autoMigrate = true;
-              enable = true;
-              user = "dan";
-            };
-          }
+          # nix-homebrew.darwinModules.nix-homebrew
+          # {
+          #   nix-homebrew = {
+          #     autoMigrate = true;
+          #     enable = true;
+          #     onActivation = {
+          #       autoUpdate = true;
+          #       cleanup = "zap";
+          #       upgrade = true;
+          #     };
+          #     user = "dan";
+          #   };
+          # }
         ];
       };
     };
