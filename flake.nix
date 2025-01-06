@@ -1,8 +1,6 @@
 {
   description = "Dan's latest dotfiles flake";
   # TODO
-  # fonts not working in Zed
-  # check for others to migrate from dotfiles
   # Alfred setup
   # what homebrew apps can I move to nixpkgs?
 

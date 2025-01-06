@@ -1,0 +1,32 @@
+[[language]]
+name = "hcl"
+auto-format = true
+ 
+[[language]]
+name = "markdown"
+auto-format = true
+file-types = ["md"]
+formatter = { command = "prettier", args = [
+  "--parser",
+  "markdown",
+  "--print-width",
+  "100",
+  "--prose-wrap",
+  "always",
+] }
+ 
+[[language]]
+name = "nix"
+auto-format = true
+formatter = { command = "nixfmt", args = [] }
+ 
+[[language]]
+name = "python"
+auto-format = true
+formatter = { command = "black", args = ["-"] }
+ 
+[[language]]
+name = "yaml"
+auto-format = true
+file-types = ["yml", "yaml"]
+formatter = { command = "prettier", args = ["--parser", "yaml"] }

@@ -1,0 +1,4 @@
+theme = "monokai_pro_spectrum"
+
+[editor.file-picker]
+hidden = false
