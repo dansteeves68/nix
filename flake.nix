@@ -43,8 +43,10 @@
             uv
           ];
           fonts.packages = with pkgs; [
-            anonymousPro
-            powerline-symbols
+            nerd-fonts.anonymice
+            nerd-fonts.blex-mono
+            nerd-fonts.inconsolata
+            nerd-fonts.jetbrains-mono
           ];
           homebrew = {
             onActivation.autoUpdate = true;
