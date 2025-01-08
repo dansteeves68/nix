@@ -31,10 +31,12 @@
             jq
             kitty
             mas
+            net-news-wire
             nil
             nixd
             nixfmt-rfc-style
             ripgrep
+            somafm-cli
             vim
             wget
             zed-editor
@@ -59,7 +61,7 @@
               "marked"
               "moom"
               "multiviewer-for-f1"
-              "netnewswire"
+              # "netnewswire"
               "soulver"
               "steermouse"
               "zoom"
