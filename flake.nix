@@ -212,7 +212,7 @@
                 caseSensitive = false;
                 color = true;
                 editor.keymap = "vi";
-                prompt.theme = "powerline";
+                prompt.theme = "steeef";
                 ssh.identities = [ ];
                 terminal.tabTitleFormat = "%m: %s";
               };
