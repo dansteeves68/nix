@@ -55,7 +55,6 @@
             wget
             zed-editor
             uv
-            zoxide
           ];
           fonts.packages = with pkgs; [
             nerd-fonts.anonymice
@@ -215,6 +214,7 @@
               userEmail = "dan@thesteeves.org";
               userName = "dansteeves68";
             };
+            zoxide.enable = true;
             zsh = {
               enable = true;
               autocd = true;
