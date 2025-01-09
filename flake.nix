@@ -25,22 +25,37 @@
         { pkgs, config, ... }:
         {
           environment.systemPackages = with pkgs; [
+            awscli2
+            bat
+            choose
             coreutils
             curl
+            duf
+            dust
+            eza
+            fd
+            gping
             helix
+            htop
             jq
             kitty
+            lsd
             mas
+            mcfly
             net-news-wire
             nil
             nixd
             nixfmt-rfc-style
+            nodePackages.prettier
+            procs
             ripgrep
             somafm-cli
+            tldr
             vim
             wget
             zed-editor
             uv
+            zoxide
           ];
           fonts.packages = with pkgs; [
             nerd-fonts.anonymice
@@ -56,7 +71,6 @@
             casks = [
               "1password"
               "alfred"
-              "discord"
               "fantastical"
               "marked"
               "moom"
@@ -64,7 +78,6 @@
               # "netnewswire"
               "soulver"
               "steermouse"
-              "zoom"
             ];
             taps = [
               "homebrew/services"
@@ -185,6 +198,15 @@
             home-manager.enable = true;
             gh.enable = true;
             git = {
+              aliases = {
+                c = "commit";
+                cam = "commit -am";
+                co = "checkout";
+                cob = "checkout -b";
+                f = "fetch";
+                p = "pull";
+                st = "status";
+              };
               enable = true;
               extraConfig = {
                 push.autoSetupRemote = true;
@@ -218,7 +240,22 @@
                 ssh.identities = [ ];
                 terminal.tabTitleFormat = "%m: %s";
               };
-              # syntaxHighlighting.enable = true;
+              shellAliases = {
+                cat = "echo for cat, consider bat; cat";
+                cd = "echo for cd, consider zoxide; cd";
+                cut = "echo for cut, consider choose; cut";
+                df = "echo for df, consider duf; df";
+                du = "echo for du, consider dust; du";
+                find = "echo for find, consider fd; find";
+                g = "git";
+                history = "echo for history, consider mcfly; history";
+                ls = "echo for ls, consider eza; ls";
+                man = "echo for man, consider tldr; man";
+                ping = "echo for ping, consider gping; ping";
+                ps = "echo for ps, consider procs; ps";
+                z = "zoxide";
+              };
+              syntaxHighlighting.enable = true;
             };
           };
         };
