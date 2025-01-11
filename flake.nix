@@ -100,10 +100,7 @@
             done
           '';
           system.activationScripts.postUserActivation.text = ''
-            # Following line should allow us to avoid a logout/login cycle
             /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-            # Note when working on Dock enable this line or run manually after switch
-            # killall Dock
           '';
           system.configurationRevision = self.rev or self.dirtyRev or null;
           system.defaults.alf = {
