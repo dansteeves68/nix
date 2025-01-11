@@ -2,7 +2,7 @@
   description = "Dan's latest dotfiles flake";
   # TODO
   # Alfred setup
-  # what homebrew apps can I move to nixpkgs?
+  # how is zoxide supposed to work?
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -17,11 +17,13 @@
       self,
       home-manager,
       nix-darwin,
+      nixpkgs,
       ...
     }:
     let
-      # nix darwin
-      configuration =
+      inherit (nixpkgs) lib;
+
+      my-nix-darwin-with-homebrew =
         { pkgs, config, ... }:
         {
           environment.systemPackages = with pkgs; [
@@ -74,7 +76,6 @@
               "marked"
               "moom"
               "multiviewer-for-f1"
-              # "netnewswire"
               "soulver"
               "steermouse"
             ];
@@ -85,7 +86,7 @@
           };
           nix.optimise.automatic = true;
           nix.settings.experimental-features = "nix-command flakes";
-          nixpkgs.hostPlatform = "x86_64-darwin";
+          nixpkgs.hostPlatform = config.machine.platform;
           programs.bash.enable = true;
           programs.zsh.enable = true;
           security.pam.enableSudoTouchIdAuth = true;
@@ -173,17 +174,15 @@
             remapCapsLockToEscape = true;
           };
           system.stateVersion = 5;
-          users.users = {
-            dan = {
-              description = "Dan Steeves";
-              home = /Users/dan;
-              name = "dan";
-            };
-          };
         };
-      # home manager
-      home =
-        { ... }:
+
+      my-home-manager =
+        {
+          git-username,
+          git-email,
+        }:
+        { config, ... }:
+
         {
           fonts.fontconfig.enable = true;
           home.packages = [ ];
@@ -211,10 +210,13 @@
                 push.autoSetupRemote = true;
               };
               ignores = [ ".DS_Store" ];
-              userEmail = "dan@thesteeves.org";
-              userName = "dansteeves68";
+              userEmail = git-email;
+              userName = git-username;
             };
-            zoxide.enable = true;
+            zoxide = {
+              enable = true;
+              enableZshIntegration = true;
+            };
             zsh = {
               enable = true;
               autocd = true;
@@ -237,12 +239,11 @@
                 color = true;
                 editor.keymap = "vi";
                 prompt.theme = "steeef";
-                ssh.identities = [ ];
+                ssh.identities = [ "id_rsa" ];
                 terminal.tabTitleFormat = "%m: %s";
               };
               shellAliases = {
                 cat = "echo for cat, consider bat; cat";
-                cd = "echo for cd, consider zoxide; cd";
                 cut = "echo for cut, consider choose; cut";
                 df = "echo for df, consider duf; df";
                 du = "echo for du, consider dust; du";
@@ -260,21 +261,69 @@
           };
         };
 
+      machines = {
+        LN7YNX3G7 = {
+          platform = "aarch64-darwin";
+          user = {
+            username = "c079373";
+            git = {
+              username = "dan-steeves_thrivent";
+              email = "dan.steeves@thrivent.com";
+            };
+          };
+        };
+        stolen = {
+          platform = "x86_64-darwin";
+          user = {
+            git = {
+              username = "dansteeves68";
+              email = "dan@thesteeves.org";
+            };
+            username = "dan";
+          };
+        };
+      };
+
+      mkMachineConfig =
+        { git, username }:
+        {
+          users.users.${username} = {
+            description = "Dan Steeves";
+            home = "/Users/${username}";
+            name = username;
+          };
+        };
+
+      mkDarwinConfig =
+        name: machineConfig:
+        nix-darwin.lib.darwinSystem {
+          modules = [
+            my-nix-darwin-with-homebrew
+            {
+              options.machine.platform = lib.mkOption {
+                type = lib.types.str;
+                description = "The platform architecture for this machine";
+              };
+              config.machine.platform = machineConfig.platform;
+            }
+            (mkMachineConfig machineConfig.user)
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.backupFileExtension = "backup";
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${machineConfig.user.username} = my-home-manager {
+                git-username = machineConfig.user.git.username;
+                git-email = machineConfig.user.git.email;
+              };
+            }
+          ];
+        };
+
     in
     {
-      # Build darwin flake using:
-      # $ darwin-rebuild build --flake ".#stolen"
-      darwinConfigurations."stolen" = nix-darwin.lib.darwinSystem {
-        modules = [
-          configuration
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.backupFileExtension = "backup";
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.dan = home;
-          }
-        ];
-      };
+      darwinConfigurations = builtins.mapAttrs (
+        name: machineConfig: mkDarwinConfig name machineConfig
+      ) machines;
     };
 }
