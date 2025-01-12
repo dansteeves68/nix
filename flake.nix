@@ -189,15 +189,6 @@
             fd.enable = true;
             gh.enable = true;
             git = {
-              aliases = {
-                c = "commit";
-                cam = "commit -am";
-                co = "checkout";
-                cob = "checkout -b";
-                f = "fetch";
-                p = "pull";
-                st = "status";
-              };
               enable = true;
               extraConfig = {
                 push.autoSetupRemote = true;
@@ -232,13 +223,22 @@
                 caseSensitive = false;
                 color = true;
                 editor.keymap = "vi";
+                # order of pmodules matters, see prezto documentation
+                pmodules = [
+                  "git"
+                  "prompt"
+                  "spectrum"
+                  "terminal"
+                  "utility"
+                  "completion"
+                ];
                 prompt.theme = "steeef";
                 ssh.identities = [ "id_rsa" ];
-                terminal.tabTitleFormat = "%m: %s";
+                terminal.autoTitle = true;
               };
               shellAliases = {
                 cat = "bat";
-                g = "git";
+                drs = ''darwin-rebuild switch --flake ".#$(uname -n)"'';
                 ls = "eza";
               };
               syntaxHighlighting.enable = true;
