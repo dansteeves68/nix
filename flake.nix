@@ -28,14 +28,12 @@
         {
           environment.systemPackages = with pkgs; [
             awscli2
-            bat
             choose
             coreutils
             curl
             duf
             dust
             eza
-            fd
             gping
             helix
             htop
@@ -43,7 +41,6 @@
             kitty
             lsd
             mas
-            mcfly
             net-news-wire
             nil
             nixd
@@ -191,6 +188,8 @@
           home.stateVersion = "24.11";
           programs = {
             home-manager.enable = true;
+            bat.enable = true;
+            fd.enable = true;
             gh.enable = true;
             git = {
               aliases = {
@@ -210,6 +209,7 @@
               userEmail = git-email;
               userName = git-username;
             };
+            mcfly.enable = true;
             zoxide = {
               enable = true;
               enableZshIntegration = true;
@@ -240,17 +240,9 @@
                 terminal.tabTitleFormat = "%m: %s";
               };
               shellAliases = {
-                cat = "echo for cat, consider bat; cat";
-                cut = "echo for cut, consider choose; cut";
-                df = "echo for df, consider duf; df";
-                du = "echo for du, consider dust; du";
-                find = "echo for find, consider fd; find";
+                cat = "bat";
                 g = "git";
-                history = "echo for history, consider mcfly; history";
-                ls = "echo for ls, consider eza; ls";
-                man = "echo for man, consider tldr; man";
-                ping = "echo for ping, consider gping; ping";
-                ps = "echo for ps, consider procs; ps";
+                ls = "eza";
               };
               syntaxHighlighting.enable = true;
             };
