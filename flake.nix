@@ -1,8 +1,5 @@
 {
   description = "Dan's latest dotfiles flake";
-  # TODO
-  # Alfred setup
-  # how is zoxide supposed to work?
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
