@@ -289,31 +289,29 @@
           };
         };
 
-      mkDarwinConfig =
-        name: machineConfig:
-        nix-darwin.lib.darwinSystem {
-          modules = [
-            my-nix-darwin-with-homebrew
-            {
-              options.machine.platform = lib.mkOption {
-                type = lib.types.str;
-                description = "The platform architecture for this machine";
-              };
-              config.machine.platform = machineConfig.platform;
-            }
-            (mkMachineConfig machineConfig.user)
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.backupFileExtension = "backup";
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.${machineConfig.user.username} = my-home-manager {
-                git-username = machineConfig.user.git.username;
-                git-email = machineConfig.user.git.email;
-              };
-            }
-          ];
-        };
+      mkDarwinConfig = nix-darwin.lib.darwinSystem {
+        modules = [
+          my-nix-darwin-with-homebrew
+          {
+            options.machine.platform = lib.mkOption {
+              type = lib.types.str;
+              description = "The platform architecture for this machine";
+            };
+            config.machine.platform = machineConfig.platform;
+          }
+          (mkMachineConfig machineConfig.user)
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.backupFileExtension = "backup";
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.${machineConfig.user.username} = my-home-manager {
+              git-username = machineConfig.user.git.username;
+              git-email = machineConfig.user.git.email;
+            };
+          }
+        ];
+      };
 
     in
     {
