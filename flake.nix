@@ -84,6 +84,7 @@
           programs.bash.enable = true;
           programs.zsh.enable = true;
           security.pam.enableSudoTouchIdAuth = true;
+          security.sudo.extraConfig = "Defaults timestamp_timeout=60";
           system.activationScripts.applications.text = ''
             echo "setting up /Applications/Nix Apps..." >&2
             rm -rf /Applications/Nix\ Apps
