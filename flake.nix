@@ -178,8 +178,6 @@
           git-username,
           git-email,
         }:
-        { config, ... }:
-
         {
           fonts.fontconfig.enable = true;
           home.packages = [ ];
@@ -282,7 +280,7 @@
       };
 
       mkMachineConfig =
-        { git, username }:
+        { username }:
         {
           users.users.${username} = {
             description = "Dan Steeves";
