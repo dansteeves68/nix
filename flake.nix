@@ -178,6 +178,8 @@
           git-username,
           git-email,
         }:
+        { config, ... }:
+
         {
           fonts.fontconfig.enable = true;
           home.packages = [ ];
@@ -249,7 +251,6 @@
                 man = "echo for man, consider tldr; man";
                 ping = "echo for ping, consider gping; ping";
                 ps = "echo for ps, consider procs; ps";
-                z = "zoxide";
               };
               syntaxHighlighting.enable = true;
             };
@@ -280,7 +281,7 @@
       };
 
       mkMachineConfig =
-        { username }:
+        { git, username }:
         {
           users.users.${username} = {
             description = "Dan Steeves";
@@ -289,29 +290,31 @@
           };
         };
 
-      mkDarwinConfig = nix-darwin.lib.darwinSystem {
-        modules = [
-          my-nix-darwin-with-homebrew
-          {
-            options.machine.platform = lib.mkOption {
-              type = lib.types.str;
-              description = "The platform architecture for this machine";
-            };
-            config.machine.platform = machineConfig.platform;
-          }
-          (mkMachineConfig machineConfig.user)
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.backupFileExtension = "backup";
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.${machineConfig.user.username} = my-home-manager {
-              git-username = machineConfig.user.git.username;
-              git-email = machineConfig.user.git.email;
-            };
-          }
-        ];
-      };
+      mkDarwinConfig =
+        name: machineConfig:
+        nix-darwin.lib.darwinSystem {
+          modules = [
+            my-nix-darwin-with-homebrew
+            {
+              options.machine.platform = lib.mkOption {
+                type = lib.types.str;
+                description = "The platform architecture for this machine";
+              };
+              config.machine.platform = machineConfig.platform;
+            }
+            (mkMachineConfig machineConfig.user)
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.backupFileExtension = "backup";
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${machineConfig.user.username} = my-home-manager {
+                git-username = machineConfig.user.git.username;
+                git-email = machineConfig.user.git.email;
+              };
+            }
+          ];
+        };
 
     in
     {
