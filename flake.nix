@@ -174,7 +174,7 @@
           git-username,
           git-email,
         }:
-        { config, ... }:
+        { ... }:
 
         {
           fonts.fontconfig.enable = true;
