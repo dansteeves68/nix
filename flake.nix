@@ -46,6 +46,7 @@
             procs
             ripgrep
             somafm-cli
+            tenv
             tldr
             vim
             wget
@@ -84,7 +85,7 @@
           programs.bash.enable = true;
           programs.zsh.enable = true;
           security.pam.enableSudoTouchIdAuth = true;
-          security.sudo.extraConfig = "Defaults timestamp_timeout=60";
+          security.sudo.extraConfig = ""; # TODO: would love to not enter password when running darwin-rebuild
           system.activationScripts.applications.text = ''
             echo "setting up /Applications/Nix Apps..." >&2
             rm -rf /Applications/Nix\ Apps
@@ -199,6 +200,15 @@
               userName = git-username;
             };
             mcfly.enable = true;
+            ssh = {
+              enable = true;
+              addKeysToAgent = "yes";
+              forwardAgent = true;
+              extraConfig = ''
+                AddKeysToAgent yes
+                UseKeychain yes
+              '';
+            };
             zoxide = {
               enable = true;
               enableZshIntegration = true;
@@ -229,12 +239,16 @@
                   "git"
                   "prompt"
                   "spectrum"
+                  "ssh"
                   "terminal"
                   "utility"
                   "completion"
                 ];
                 prompt.theme = "steeef";
-                ssh.identities = [ "id_rsa" ];
+                ssh.identities = [
+                  "id_rsa"
+                  "id_rsa_bastion"
+                ];
                 terminal.autoTitle = true;
               };
               shellAliases = {
