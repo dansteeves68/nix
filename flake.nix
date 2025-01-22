@@ -140,10 +140,11 @@
             AppleShowAllExtensions = true;
             AppleShowAllFiles = true;
             CreateDesktop = false; # Whether to show icons on the desktop or not.
+            FXDefaultSearchScope = "SCcf";
             FXEnableExtensionChangeWarning = true;
             FXPreferredViewStyle = "Nlsv";
             ShowPathbar = true;
-            ShowStatusBar = false;
+            ShowStatusBar = true;
             QuitMenuItem = true;
           };
           system.defaults.loginwindow = {
