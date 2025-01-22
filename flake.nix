@@ -113,20 +113,28 @@
             dashboard-in-overlay = false;
             enable-spring-load-actions-on-all-items = false;
             expose-group-apps = false;
+            largesize = null;
             launchanim = false;
-            mineffect = null;
-            minimize-to-application = false;
+            magnification = false;
+            mineffect = "suck";
+            minimize-to-application = true;
             mouse-over-hilite-stack = false;
             mru-spaces = true;
             orientation = "bottom";
+            persistent-apps = [ ];
+            persistent-others = [
+              "~/Downloads"
+              "~/Screenshots"
+            ];
             show-process-indicators = true;
             show-recents = false;
             showhidden = false;
+            static-only = true;
             tilesize = 64;
             wvous-bl-corner = 1;
             wvous-br-corner = 1;
-            wvous-tl-corner = 4;
-            wvous-tr-corner = 1;
+            wvous-tl-corner = 1;
+            wvous-tr-corner = 4;
           };
           system.defaults.finder = {
             AppleShowAllExtensions = true;
