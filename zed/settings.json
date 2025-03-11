@@ -1,11 +1,3 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run `zed: open default settings` from the
-// command palette (cmd-shift-p / ctrl-shift-p)
 {
   "assistant": {
     "default_model": {
@@ -24,6 +16,9 @@
       "format_on_save": "on",
       "formatter": [
         {
+          "external": { "command": "uvx", "arguments": ["ruff", "format", "-"] }
+        },
+        {
           "code_actions": {
             "source.organizeImports.ruff": true,
             "source.fixAll.ruff": true
@@ -35,12 +30,21 @@
           }
         }
       ]
+    },
+    "Terraform": {
+      "formatter": {
+        "external": {
+          "command": "terraform",
+          "arguments": ["fmt", "-"]
+        }
+      },
+      "format_on_save": "on"
     }
   },
   "terminal": { "dock": "right" },
   "theme": {
     "mode": "system",
-    "light": "Atelier Seaside Dark",
+    "light": "Gruvbox Dark Hard",
     "dark": "Gruvbox Dark Hard"
   },
   "ui_font_size": 16

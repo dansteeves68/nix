@@ -52,12 +52,6 @@
             wget
             zed-editor
             uv
-            # for qmk
-            # arm-none-eabi-gcc
-            # avr-gcc
-            avrdude
-            dfu-programmer
-            dfu-util
           ];
           fonts.packages = with pkgs; [
             nerd-fonts.anonymice
@@ -127,7 +121,7 @@
             mouse-over-hilite-stack = false;
             mru-spaces = true;
             orientation = "bottom";
-            persistent-apps = [ ];
+            # persistent-apps = [ ];
             persistent-others = [
               "~/Downloads"
               "~/Screenshots"
@@ -135,7 +129,7 @@
             show-process-indicators = true;
             show-recents = false;
             showhidden = false;
-            static-only = true;
+            # static-only = true;
             tilesize = 64;
             wvous-bl-corner = 1;
             wvous-br-corner = 1;
@@ -198,7 +192,6 @@
             EDITOR = "hx";
             HOMEBREW_AUTO_UPDATE_SECS = 50000;
             VISUAL = "zeditor";
-            PATH = "$HOME/.local/bin:$PATH"; # for uv-installed tools
           };
           home.stateVersion = "24.11";
           programs = {
@@ -209,7 +202,19 @@
             git = {
               enable = true;
               extraConfig = {
+                branch.sort = "-committerdate";
+                column.ui = "auto";
+                diff.algorithm = "histogram";
+                diff.colorMoved = "plain";
+                diff.mnemonicPrefix = true;
+                diff.renames = true;
+                fetch.all = true;
+                fetch.prune = true;
+                fetch.pruneTags = true;
                 push.autoSetupRemote = true;
+                push.default = "simple";
+                push.followTags = true;
+                tag.sort = "version:refname";
               };
               ignores = [ ".DS_Store" ];
               userEmail = git-email;
