@@ -79,12 +79,13 @@
               "nrlquaker/createzap"
             ];
           };
+          ids.gids.nixbld = 30000;
           nix.optimise.automatic = true;
           nix.settings.experimental-features = "nix-command flakes";
           nixpkgs.hostPlatform = config.machine.platform;
           programs.bash.enable = true;
           programs.zsh.enable = true;
-          security.pam.enableSudoTouchIdAuth = true;
+          security.pam.services.sudo_local.touchIdAuth = true;
           security.sudo.extraConfig = ""; # TODO: would love to not enter password when running darwin-rebuild
           system.activationScripts.applications.text = ''
             echo "setting up /Applications/Nix Apps..." >&2
