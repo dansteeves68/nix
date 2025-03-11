@@ -52,6 +52,12 @@
             wget
             zed-editor
             uv
+            # for qmk
+            # arm-none-eabi-gcc
+            # avr-gcc
+            avrdude
+            dfu-programmer
+            dfu-util
           ];
           fonts.packages = with pkgs; [
             nerd-fonts.anonymice
@@ -192,6 +198,7 @@
             EDITOR = "hx";
             HOMEBREW_AUTO_UPDATE_SECS = 50000;
             VISUAL = "zeditor";
+            PATH = "$HOME/.local/bin:$PATH"; # for uv-installed tools
           };
           home.stateVersion = "24.11";
           programs = {
