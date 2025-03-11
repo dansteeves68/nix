@@ -68,6 +68,7 @@
               "1password"
               "alfred"
               "fantastical"
+              "firefox"
               "marked"
               "moom"
               "multiviewer-for-f1"
