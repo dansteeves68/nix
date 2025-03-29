@@ -64,6 +64,7 @@
             onActivation.cleanup = "zap";
             onActivation.upgrade = true;
             enable = true;
+            brews = [ ];
             casks = [
               "1password"
               "alfred"
@@ -75,7 +76,11 @@
               "soulver"
               "steermouse"
             ];
+            masApps = { };
             taps = [
+              "homebrew/bundle"
+              "homebrew/cask"
+              "homebrew/core"
               "homebrew/services"
               "nrlquaker/createzap"
             ];
