@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -14,6 +15,7 @@
       self,
       home-manager,
       nix-darwin,
+      nix-homebrew,
       nixpkgs,
       ...
     }:
@@ -321,6 +323,15 @@
         name: machineConfig:
         nix-darwin.lib.darwinSystem {
           modules = [
+            nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                enableRosetta = if machineConfig.platform == "x86_64-darwin" then false else true;
+                user = machineConfig.user.username;
+                autoMigrate = true;
+              };
+            }
             my-nix-darwin-with-homebrew
             {
               options.machine.platform = lib.mkOption {
