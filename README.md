@@ -9,3 +9,9 @@ and/or packages but the home-manager options are just easier.
 
 A few programs I find easier to manage outside of Nix, notably Alfred, helix, kitty, and Zed. For
 these I use the traditional config file formats here and link them from `~/.config/` or similar.
+
+# To rebuild and switch
+
+```bash
+darwin-rebuild switch --flake ".#$(uname -n)"
+```
