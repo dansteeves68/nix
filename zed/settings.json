@@ -10,6 +10,11 @@
   "buffer_font_family": "JetBrainsMonoNL Nerd Font Mono",
   "buffer_font_size": 16,
   "languages": {
+    "JSON": {
+      "formatter": {
+        "external": { "command": "prettier", "arguments": ["--parser", "json"] }
+      }
+    },
     "Nix": { "formatter": { "external": { "command": "nixfmt" } } },
     "Python": {
       "language_servers": ["ruff"],

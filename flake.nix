@@ -76,6 +76,7 @@
               "multiviewer-for-f1"
               "soulver"
               "steermouse"
+              "vial"
             ];
             taps = [
               "homebrew/services"
