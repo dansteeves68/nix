@@ -69,9 +69,11 @@
             casks = [
               "1password"
               "alfred"
+              "arc"
+              "cursor"
               "fantastical"
               "firefox"
-              "marked"
+              "marked-app"
               "moom"
               "multiviewer-for-f1"
               "soulver"
