@@ -69,7 +69,6 @@
             casks = [
               "1password"
               "alfred"
-              "arc"
               "cursor"
               "fantastical"
               "firefox"
