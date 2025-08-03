@@ -69,6 +69,7 @@
             casks = [
               "1password"
               "alfred"
+              "cardhop"
               "cursor"
               "fantastical"
               "firefox"
