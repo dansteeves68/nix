@@ -102,7 +102,7 @@
             done
           '';
           # system.activationScripts.postUserActivation.text = ''
-            # /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+          # /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
           # '';
           system.configurationRevision = self.rev or self.dirtyRev or null;
           system.defaults.alf = {
@@ -194,6 +194,7 @@
         {
           fonts.fontconfig.enable = true;
           home.packages = [ ];
+          home.sessionPath = [ "$HOME/.local/bin" ];
           home.sessionVariables = {
             EDITOR = "hx";
             HOMEBREW_AUTO_UPDATE_SECS = 50000;
