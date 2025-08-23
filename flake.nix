@@ -70,24 +70,23 @@
               "1password"
               "alfred"
               "cardhop"
-              "cursor"
               "fantastical"
               "firefox"
               "marked-app"
               "moom"
               "multiviewer-for-f1"
-              "soulver"
               "steermouse"
-              "vial"
+              "ungoogled-chromium"
             ];
             taps = [
-              "homebrew/services"
               "nrlquaker/createzap"
             ];
           };
           ids.gids.nixbld = 30000;
-          nix.optimise.automatic = true;
-          nix.settings.experimental-features = "nix-command flakes";
+          nix.enable = false;
+          # nix.optimise.automatic = true;
+          # nix.settings.experimental-features = "nix-command flakes";
+          nixpkgs.config.allowUnfree = true;
           nixpkgs.hostPlatform = config.machine.platform;
           programs.bash.enable = true;
           programs.zsh.enable = true;
@@ -102,15 +101,15 @@
               cp -r "$src" /Applications/Nix\ Apps
             done
           '';
-          system.activationScripts.postUserActivation.text = ''
-            /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-          '';
+          # system.activationScripts.postUserActivation.text = ''
+            # /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+          # '';
           system.configurationRevision = self.rev or self.dirtyRev or null;
           system.defaults.alf = {
-            globalstate = 1;
-            allowsignedenabled = 1;
-            allowdownloadsignedenabled = 1;
-            stealthenabled = 1;
+            # globalstate = 1;
+            # allowsignedenabled = 1;
+            # allowdownloadsignedenabled = 1;
+            # stealthenabled = 1;
           };
           system.defaults.dock = {
             appswitcher-all-displays = false;
@@ -300,7 +299,7 @@
             };
           };
         };
-        stolen = {
+        ibish = {
           platform = "x86_64-darwin";
           user = {
             git = {
@@ -342,6 +341,7 @@
                 description = "The platform architecture for this machine";
               };
               config.machine.platform = machineConfig.platform;
+              config.system.primaryUser = machineConfig.user.username;
             }
             (mkMachineConfig machineConfig.user)
             home-manager.darwinModules.home-manager
