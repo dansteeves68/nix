@@ -49,6 +49,7 @@
             ripgrep
             somafm-cli
             tenv
+            terraform-ls
             tldr
             vim
             wget
