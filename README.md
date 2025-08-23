@@ -10,8 +10,22 @@ and/or packages but the home-manager options are just easier.
 A few programs I find easier to manage outside of Nix, notably Alfred, helix, kitty, and Zed. For
 these I use the traditional config file formats here and link them from `~/.config/` or similar.
 
-# To rebuild and switch
+## To rebuild and switch
 
 ```bash
 darwin-rebuild switch --flake ".#$(uname -n)"
 ```
+
+## Fresh Start 2025-08
+
+New machine "ibish", with fresh intall of Sequoia.
+
+As best I can remember...
+
+- Install nix from Determinate Nix installer
+- Copy flake.nix from this repo, then
+- Sort of following instruction in nix-darwin repo
+
+`sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake ".#ibish"`
+
+Lots of testing remains.
