@@ -29,3 +29,16 @@ As best I can remember...
 `sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake ".#ibish"`
 
 Lots of testing remains.
+
+### Other Setup
+
+- Go through apps in Homebrew first, then packages
+- First 1Password
+- Then Alfred
+- Any order from there is probably ok
+- Moom
+- TODO: Sync Moom & Alfred prefs again
+
+Current setup won't show 1password plugin in Safari. Using Ungoogled Chromium instead.
+
+
