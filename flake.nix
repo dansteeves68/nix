@@ -27,6 +27,7 @@
         {
           environment.systemPackages = with pkgs; [
             awscli2
+            bash-language-server
             choose
             coreutils
             curl
@@ -37,6 +38,7 @@
             helix
             htop
             jq
+            jq-lsp
             kitty
             lsd
             marksman
@@ -49,11 +51,13 @@
             procs
             ripgrep
             somafm-cli
+            taplo-lsp
             tenv
             terraform-ls
             tldr
             vim
             wget
+            yaml-language-server
             zed-editor
             uv
           ];
