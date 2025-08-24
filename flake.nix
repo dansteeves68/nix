@@ -201,7 +201,7 @@
           home.sessionVariables = {
             EDITOR = "hx";
             HOMEBREW_AUTO_UPDATE_SECS = 50000;
-            VISUAL = "zeditor";
+            VISUAL = "hx";
           };
           home.stateVersion = "24.11";
           programs = {
