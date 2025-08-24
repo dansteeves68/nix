@@ -12,7 +12,7 @@ these I use the traditional config file formats here and link them from `~/.conf
 
 ## To rebuild and switch
 
-```bash
+```sh
 darwin-rebuild switch --flake ".#$(uname -n)"
 ```
 
@@ -24,11 +24,13 @@ As best I can remember...
 
 - Install nix from Determinate Nix installer
 - Copy flake.nix from this repo, then
-- Sort of following instruction in nix-darwin repo
+- Following instruction in nix-darwin repo:
 
-`sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake ".#ibish"`
+```sh
+sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake ".#ibish"
+```
 
-Lots of testing remains.
+- After that easy enough to clone repo and continue using `sudo darwin-rebuild...`
 
 ### Other Setup
 
@@ -40,5 +42,3 @@ Lots of testing remains.
 - TODO: Sync Moom & Alfred prefs again
 
 Current setup won't show 1password plugin in Safari. Using Ungoogled Chromium instead.
-
-

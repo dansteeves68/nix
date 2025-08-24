@@ -39,6 +39,7 @@
             jq
             kitty
             lsd
+            marksman
             mas
             net-news-wire
             nil
