@@ -129,10 +129,7 @@
             mru-spaces = true;
             orientation = "bottom";
             # persistent-apps = [ ];
-            persistent-others = [
-              "~/Downloads"
-              "~/Screenshots"
-            ];
+            # persistent-others = [ ];
             show-process-indicators = true;
             show-recents = false;
             showhidden = false;
