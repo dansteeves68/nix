@@ -10,8 +10,35 @@ and/or packages but the home-manager options are just easier.
 A few programs I find easier to manage outside of Nix, notably Alfred, helix, kitty, and Zed. For
 these I use the traditional config file formats here and link them from `~/.config/` or similar.
 
-# To rebuild and switch
+## To rebuild and switch
 
-```bash
+```sh
 darwin-rebuild switch --flake ".#$(uname -n)"
 ```
+
+## Fresh Start 2025-08
+
+New machine "ibish", with fresh intall of Sequoia.
+
+As best I can remember...
+
+- Install nix from Determinate Nix installer
+- Copy flake.nix from this repo, then
+- Following instruction in nix-darwin repo:
+
+```sh
+sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake ".#ibish"
+```
+
+- After that easy enough to clone repo and continue using `sudo darwin-rebuild...`
+
+### Other Setup
+
+- Go through apps in Homebrew first, then packages
+- First 1Password
+- Then Alfred
+- Any order from there is probably ok
+- Moom
+- TODO: Sync Moom & Alfred prefs again
+
+Current setup won't show 1password plugin in Safari. Using Ungoogled Chromium instead.

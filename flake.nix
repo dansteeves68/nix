@@ -27,6 +27,7 @@
         {
           environment.systemPackages = with pkgs; [
             awscli2
+            bash-language-server
             choose
             coreutils
             curl
@@ -37,8 +38,10 @@
             helix
             htop
             jq
+            jq-lsp
             kitty
             lsd
+            marksman
             mas
             net-news-wire
             nil
@@ -48,10 +51,14 @@
             procs
             ripgrep
             somafm-cli
+            taplo-lsp
             tenv
+            terraform-ls
             tldr
+            toml-sort
             vim
             wget
+            yaml-language-server
             zed-editor
             uv
           ];
@@ -70,24 +77,23 @@
               "1password"
               "alfred"
               "cardhop"
-              "cursor"
               "fantastical"
               "firefox"
               "marked-app"
               "moom"
               "multiviewer-for-f1"
-              "soulver"
               "steermouse"
-              "vial"
-            ];
+            ]
+            ++ (if config.system.primaryUser == "dan" then [ "ungoogled-chromium" ] else [ ]);
             taps = [
-              "homebrew/services"
               "nrlquaker/createzap"
             ];
           };
           ids.gids.nixbld = 30000;
-          nix.optimise.automatic = true;
-          nix.settings.experimental-features = "nix-command flakes";
+          nix.enable = false;
+          # nix.optimise.automatic = true;
+          # nix.settings.experimental-features = "nix-command flakes";
+          nixpkgs.config.allowUnfree = true;
           nixpkgs.hostPlatform = config.machine.platform;
           programs.bash.enable = true;
           programs.zsh.enable = true;
@@ -102,15 +108,15 @@
               cp -r "$src" /Applications/Nix\ Apps
             done
           '';
-          system.activationScripts.postUserActivation.text = ''
-            /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-          '';
+          # system.activationScripts.postUserActivation.text = ''
+          # /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+          # '';
           system.configurationRevision = self.rev or self.dirtyRev or null;
           system.defaults.alf = {
-            globalstate = 1;
-            allowsignedenabled = 1;
-            allowdownloadsignedenabled = 1;
-            stealthenabled = 1;
+            # globalstate = 1;
+            # allowsignedenabled = 1;
+            # allowdownloadsignedenabled = 1;
+            # stealthenabled = 1;
           };
           system.defaults.dock = {
             appswitcher-all-displays = false;
@@ -129,10 +135,7 @@
             mru-spaces = true;
             orientation = "bottom";
             # persistent-apps = [ ];
-            persistent-others = [
-              "~/Downloads"
-              "~/Screenshots"
-            ];
+            # persistent-others = [ ];
             show-process-indicators = true;
             show-recents = false;
             showhidden = false;
@@ -190,15 +193,16 @@
           git-username,
           git-email,
         }:
-        { ... }:
+        { pkgs, ... }:
 
         {
           fonts.fontconfig.enable = true;
           home.packages = [ ];
+          home.sessionPath = [ "$HOME/.local/bin" ];
           home.sessionVariables = {
             EDITOR = "hx";
             HOMEBREW_AUTO_UPDATE_SECS = 50000;
-            VISUAL = "zeditor";
+            VISUAL = "hx";
           };
           home.stateVersion = "24.11";
           programs = {
@@ -206,6 +210,7 @@
             bat.enable = true;
             fd.enable = true;
             gh.enable = true;
+            gh.extensions = [ pkgs.gh-copilot ];
             git = {
               enable = true;
               extraConfig = {
@@ -282,6 +287,11 @@
               shellAliases = {
                 cat = "bat";
                 drs = ''darwin-rebuild switch --flake ".#$(uname -n)"'';
+                ghrw = ''
+                  gh run watch $(gh run list --workflow lambda_on_push.yml --limit 1 --json databaseId --jq ".[0].databaseId")
+                '';
+                gst = "git status";
+                gstg = "git stage";
                 ls = "eza";
               };
               syntaxHighlighting.enable = true;
@@ -300,7 +310,7 @@
             };
           };
         };
-        stolen = {
+        ibish = {
           platform = "x86_64-darwin";
           user = {
             git = {
@@ -342,6 +352,7 @@
                 description = "The platform architecture for this machine";
               };
               config.machine.platform = machineConfig.platform;
+              config.system.primaryUser = machineConfig.user.username;
             }
             (mkMachineConfig machineConfig.user)
             home-manager.darwinModules.home-manager
