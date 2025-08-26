@@ -55,6 +55,7 @@
             tenv
             terraform-ls
             tldr
+            toml-sort
             vim
             wget
             yaml-language-server
@@ -82,8 +83,8 @@
               "moom"
               "multiviewer-for-f1"
               "steermouse"
-              "ungoogled-chromium"
-            ];
+            ]
+            ++ (if config.system.primaryUser == "dan" then [ "ungoogled-chromium" ] else [ ]);
             taps = [
               "nrlquaker/createzap"
             ];
@@ -192,7 +193,7 @@
           git-username,
           git-email,
         }:
-        { ... }:
+        { pkgs, ... }:
 
         {
           fonts.fontconfig.enable = true;
@@ -209,6 +210,7 @@
             bat.enable = true;
             fd.enable = true;
             gh.enable = true;
+            gh.extensions = [ pkgs.gh-copilot ];
             git = {
               enable = true;
               extraConfig = {
@@ -285,6 +287,11 @@
               shellAliases = {
                 cat = "bat";
                 drs = ''darwin-rebuild switch --flake ".#$(uname -n)"'';
+                ghrw = ''
+                  gh run watch $(gh run list --workflow lambda_on_push.yml --limit 1 --json databaseId --jq ".[0].databaseId")
+                '';
+                gst = "git status";
+                gstg = "git stage";
                 ls = "eza";
               };
               syntaxHighlighting.enable = true;
