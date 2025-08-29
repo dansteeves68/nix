@@ -1,4 +1,4 @@
-theme = "gruvbox_dark_hard"
+theme = "nord"
 
 [editor.file-picker]
 hidden = false
