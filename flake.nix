@@ -27,6 +27,7 @@
         {
           environment.systemPackages = with pkgs; [
             awscli2
+            azure-cli
             bash-language-server
             choose
             coreutils
@@ -74,6 +75,7 @@
             onActivation.upgrade = true;
             enable = true;
             casks = [
+              # everywhere
               "1password"
               "alfred"
               "cardhop"
@@ -81,10 +83,27 @@
               "firefox"
               "marked-app"
               "moom"
-              "multiviewer-for-f1"
               "steermouse"
             ]
-            ++ (if config.system.primaryUser == "dan" then [ "ungoogled-chromium" ] else [ ]);
+            ++ (
+              if config.system.primaryUser == "dan" then
+                [
+                  # personal only
+                  "discord"
+                  "multiviewer-for-f1"
+                  "ungoogled-chromium"
+                ]
+              else
+                [ ]
+            )
+            ++ (
+              if config.system.primaryUser == "c079373" then
+                [
+                  # work only
+                ]
+              else
+                [ ]
+            );
             taps = [
               "nrlquaker/createzap"
             ];
