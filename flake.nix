@@ -226,7 +226,12 @@
           home.stateVersion = "24.11";
           programs = {
             home-manager.enable = true;
-            bat.enable = true;
+            bat = {
+              config = {
+                theme = "Nord";
+              };
+              enable = true;
+            };
             fd.enable = true;
             gh.enable = true;
             gh.extensions = [ pkgs.gh-copilot ];
