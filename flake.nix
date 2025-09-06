@@ -26,22 +26,18 @@
         { pkgs, config, ... }:
         {
           environment.systemPackages = with pkgs; [
-            awscli2
             azure-cli
             bash-language-server
             choose
             coreutils
             curl
-            duf
             dust
-            eza
+            gawk
+            gnused
             gping
             helix
-            htop
-            jq
             jq-lsp
             kitty
-            lsd
             marksman
             mas
             net-news-wire
@@ -50,18 +46,13 @@
             nixfmt-rfc-style
             nodePackages.prettier
             procs
-            ripgrep
             somafm-cli
             taplo-lsp
             tenv
             terraform-ls
-            tldr
             toml-sort
-            vim
             wget
             yaml-language-server
-            zed-editor
-            uv
           ];
           fonts.packages = with pkgs; [
             nerd-fonts.anonymice
@@ -226,6 +217,7 @@
           home.stateVersion = "24.11";
           programs = {
             home-manager.enable = true;
+            awscli.enable = true;
             bat = {
               config = {
                 theme = "Nord";
@@ -331,6 +323,11 @@
               };
               enable = true;
             };
+            eza = {
+              colors = "auto";
+              enableZshIntegration = true;
+              enable = true;
+            };
             fd.enable = true;
             gh.enable = true;
             gh.extensions = [ pkgs.gh-copilot ];
@@ -355,7 +352,15 @@
               userEmail = git-email;
               userName = git-username;
             };
+            htop.enable = true;
+            jq.enable = true;
+            lsd = {
+              enable = true;
+              enableZshIntegration = true;
+            };
             mcfly.enable = true;
+            ripgrep.enable = true;
+            ripgrep-all.enable = true;
             ssh = {
               enable = true;
               addKeysToAgent = "yes";
@@ -364,6 +369,11 @@
                 AddKeysToAgent yes
                 UseKeychain yes
               '';
+            };
+            uv.enable = true;
+            vim = {
+              enable = true;
+              plugins = [ pkgs.vimPlugins.nord-vim ];
             };
             zoxide = {
               enable = true;
@@ -415,7 +425,7 @@
                 '';
                 gst = "git status";
                 gstg = "git stage";
-                ls = "eza";
+                vi = "vim";
               };
               syntaxHighlighting.enable = true;
             };
