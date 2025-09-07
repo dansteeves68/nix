@@ -2,3 +2,6 @@ theme = "nord"
 
 [editor.file-picker]
 hidden = false
+
+[keys.normal]
+C-s = "split_selection_on_newline"
