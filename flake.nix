@@ -190,7 +190,7 @@
             NSAutomaticCapitalizationEnabled = false;
             NSAutomaticDashSubstitutionEnabled = false;
             NSAutomaticPeriodSubstitutionEnabled = false;
-            _HIHideMenuBar = false;
+            # _HIHideMenuBar = true;
           };
           system.keyboard = {
             enableKeyMapping = true;
