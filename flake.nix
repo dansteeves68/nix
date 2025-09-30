@@ -33,6 +33,7 @@
             curl
             dust
             gawk
+            gnumake
             gnused
             gping
             helix
@@ -41,6 +42,7 @@
             kitty
             marksman
             mas
+            meld
             net-news-wire
             nil
             nixd
@@ -66,6 +68,9 @@
             onActivation.cleanup = "zap";
             onActivation.upgrade = true;
             enable = true;
+            brews = [
+              "snyk-cli"
+            ];
             casks = [
               # everywhere
               "1password"
@@ -226,6 +231,7 @@
               enable = true;
             };
             btop = {
+              enable = true;
               settings = {
                 color_theme = "Nord";
               };
@@ -270,7 +276,6 @@
                   theme[used_start]="#81A1C1"
                 '';
               };
-              enable = true;
             };
             eza = {
               colors = "auto";
@@ -324,6 +329,11 @@
               enable = true;
               plugins = [ pkgs.vimPlugins.nord-vim ];
             };
+            yazi = {
+              enable = true;
+              enableZshIntegration = true;
+              # flavors = {}; there is a nord flavor but needed?
+            };
             zoxide = {
               enable = true;
               enableZshIntegration = true;
@@ -375,6 +385,16 @@
                 gst = "git status";
                 gstg = "git stage";
                 vi = "vim";
+              };
+              siteFunctions = {
+                tfswitch = ''
+                  target_dir="$HOME/.terraform.d"
+                  link_name="$target_dir/credentials.tfrc.json"
+                  link_to="''${link_name}.''${1}"
+                  rm -f "$link_name"
+                  ln -s "$link_to" "$link_name"
+                  ls -l "$target_dir"
+                '';
               };
               syntaxHighlighting.enable = true;
             };
