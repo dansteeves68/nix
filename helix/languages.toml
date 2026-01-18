@@ -1,6 +1,8 @@
 [[language]]
 name = "hcl"
 auto-format = true
+file-types = ["tf"]
+formatter = { command = "terraform", args = ["fmt", "-"] }
 
 [[language]]
 name = "markdown"
