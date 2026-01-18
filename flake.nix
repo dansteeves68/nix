@@ -86,8 +86,9 @@
               if config.system.primaryUser == "dan" then
                 [
                   # personal only
+                  "claude-code"
                   "discord"
-                  "multiviewer-for-f1"
+                  # "multiviewer-for-f1"
                   "ungoogled-chromium"
                 ]
               else
