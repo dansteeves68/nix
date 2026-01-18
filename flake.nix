@@ -68,9 +68,25 @@
             onActivation.cleanup = "zap";
             onActivation.upgrade = true;
             enable = true;
-            brews = [
-              "snyk-cli"
-            ];
+            brews =
+              [ ]
+              ++ (
+                if config.system.primaryUser == "dan" then
+                  [
+                    # QMK toolchain
+                    "arm-none-eabi-gcc"
+                    # QMK nice to have (for other QMK boards and to silence warnings)
+                    "osx-cross/avr/avr-gcc"
+                    "avrdude"
+                    "dfu-programmer"
+                    "dfu-util"
+                    "dos2unix"
+                  ]
+                else
+                  [
+                    "snyk-cli"
+                  ]
+              );
             casks = [
               # everywhere
               "1password"
@@ -86,9 +102,9 @@
               if config.system.primaryUser == "dan" then
                 [
                   # personal only
+                  # Others
                   "claude-code"
                   "discord"
-                  # "multiviewer-for-f1"
                   "ungoogled-chromium"
                 ]
               else
@@ -104,6 +120,7 @@
             );
             taps = [
               "nrlquaker/createzap"
+              "osx-cross/avr"
             ];
           };
           ids.gids.nixbld = 30000;
