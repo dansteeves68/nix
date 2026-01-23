@@ -74,8 +74,7 @@
                 if config.system.primaryUser == "dan" then
                   [
                     # QMK toolchain
-                    "arm-none-eabi-gcc"
-                    # QMK nice to have (for other QMK boards and to silence warnings)
+                    "osx-cross/arm/arm-gcc-bin"
                     "osx-cross/avr/avr-gcc"
                     "avrdude"
                     "dfu-programmer"
@@ -120,6 +119,7 @@
             );
             taps = [
               "nrlquaker/createzap"
+              "osx-cross/arm"
               "osx-cross/avr"
             ];
           };
