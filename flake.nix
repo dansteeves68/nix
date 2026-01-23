@@ -51,7 +51,7 @@
             nodePackages.prettier
             procs
             somafm-cli
-            taplo-lsp
+            taplo
             tenv
             terraform-ls
             toml-sort
