@@ -38,6 +38,7 @@
             gping
             helix
             httpie
+            hugo
             jq-lsp
             kitty
             marksman
