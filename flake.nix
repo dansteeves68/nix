@@ -336,12 +336,14 @@
             ripgrep-all.enable = true;
             ssh = {
               enable = true;
-              addKeysToAgent = "yes";
-              forwardAgent = true;
-              extraConfig = ''
-                AddKeysToAgent yes
-                UseKeychain yes
-              '';
+              enableDefaultConfig = false;
+              matchBlocks."*" = {
+                addKeysToAgent = "yes";
+                forwardAgent = true;
+                extraOptions = {
+                  UseKeychain = "yes";
+                };
+              };
             };
             uv.enable = true;
             vim = {
