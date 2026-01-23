@@ -47,7 +47,7 @@
             net-news-wire
             nil
             nixd
-            nixfmt-rfc-style
+            nixfmt
             nodePackages.prettier
             procs
             somafm-cli
@@ -306,7 +306,8 @@
             gh.extensions = [ pkgs.gh-copilot ];
             git = {
               enable = true;
-              extraConfig = {
+              ignores = [ ".DS_Store" ];
+              settings = {
                 branch.sort = "-committerdate";
                 column.ui = "auto";
                 diff.algorithm = "histogram";
@@ -320,10 +321,9 @@
                 push.default = "simple";
                 push.followTags = true;
                 tag.sort = "version:refname";
+                user.email = git-email;
+                user.name = git-username;
               };
-              ignores = [ ".DS_Store" ];
-              userEmail = git-email;
-              userName = git-username;
             };
             htop.enable = true;
             jq.enable = true;
