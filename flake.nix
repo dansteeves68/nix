@@ -38,6 +38,7 @@
             gping
             helix
             httpie
+            hugo
             jq-lsp
             kitty
             marksman
@@ -46,11 +47,11 @@
             net-news-wire
             nil
             nixd
-            nixfmt-rfc-style
+            nixfmt
             nodePackages.prettier
             procs
             somafm-cli
-            taplo-lsp
+            taplo
             tenv
             terraform-ls
             toml-sort
@@ -74,7 +75,8 @@
                 if config.system.primaryUser == "dan" then
                   [
                     # QMK toolchain
-                    "arm-none-eabi-gcc"
+                    # "osx-cross/arm/arm-gcc-bin"
+                    # "arm-none-eabi-gcc"
                     # QMK nice to have (for other QMK boards and to silence warnings)
                     "osx-cross/avr/avr-gcc"
                     "avrdude"
@@ -305,7 +307,8 @@
             gh.extensions = [ pkgs.gh-copilot ];
             git = {
               enable = true;
-              extraConfig = {
+              ignores = [ ".DS_Store" ];
+              settings = {
                 branch.sort = "-committerdate";
                 column.ui = "auto";
                 diff.algorithm = "histogram";
@@ -319,10 +322,9 @@
                 push.default = "simple";
                 push.followTags = true;
                 tag.sort = "version:refname";
+                user.email = git-email;
+                user.name = git-username;
               };
-              ignores = [ ".DS_Store" ];
-              userEmail = git-email;
-              userName = git-username;
             };
             htop.enable = true;
             jq.enable = true;
@@ -335,12 +337,14 @@
             ripgrep-all.enable = true;
             ssh = {
               enable = true;
-              addKeysToAgent = "yes";
-              forwardAgent = true;
-              extraConfig = ''
-                AddKeysToAgent yes
-                UseKeychain yes
-              '';
+              enableDefaultConfig = false;
+              matchBlocks."*" = {
+                addKeysToAgent = "yes";
+                forwardAgent = true;
+                extraOptions = {
+                  UseKeychain = "yes";
+                };
+              };
             };
             uv.enable = true;
             vim = {
