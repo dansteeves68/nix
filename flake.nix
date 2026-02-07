@@ -49,7 +49,6 @@
             nixd
             nixfmt
             nodePackages.prettier
-            openssh
             procs
             somafm-cli
             taplo
