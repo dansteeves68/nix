@@ -3,3 +3,4 @@ zed/conversations
 *.bak
 temp
 result
+.claude
