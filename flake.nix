@@ -94,6 +94,7 @@
               "1password"
               "alfred"
               "cardhop"
+              "copilot-cli"
               "fantastical"
               "firefox"
               "marked-app"
@@ -126,15 +127,12 @@
             ];
           };
           ids.gids.nixbld = 30000;
-          nix.enable = false;
-          # nix.optimise.automatic = true;
-          # nix.settings.experimental-features = "nix-command flakes";
+          nix.enable = false; # false because using Determinate nix
           nixpkgs.config.allowUnfree = true;
           nixpkgs.hostPlatform = config.machine.platform;
           programs.bash.enable = true;
           programs.zsh.enable = true;
           security.pam.services.sudo_local.touchIdAuth = true;
-          security.sudo.extraConfig = ""; # TODO: would love to not enter password when running darwin-rebuild
           system.activationScripts.applications.text = ''
             echo "setting up /Applications/Nix Apps..." >&2
             rm -rf /Applications/Nix\ Apps
@@ -233,6 +231,7 @@
 
         {
           fonts.fontconfig.enable = true;
+          home.extraActivationPath = with pkgs; [ nix ];
           home.packages = [ ];
           home.sessionPath = [ "$HOME/.local/bin" ];
           home.sessionVariables = {
