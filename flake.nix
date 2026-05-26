@@ -26,6 +26,7 @@
         { pkgs, config, ... }:
         {
           environment.systemPackages = with pkgs; [
+            aria2 # bittorrent client
             azure-cli
             bash-language-server
             choose
@@ -50,6 +51,7 @@
             nixfmt
             nodePackages.prettier
             procs
+            rustup
             somafm-cli
             taplo
             tenv
@@ -97,6 +99,7 @@
               "copilot-cli"
               "fantastical"
               "firefox"
+              # "liteparse" what did I want this for???
               "marked-app"
               "moom"
               "steermouse"
