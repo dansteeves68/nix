@@ -37,6 +37,7 @@
             gnumake
             gnused
             gping
+            graph-easy
             helix
             httpie
             hugo
@@ -49,12 +50,13 @@
             nil
             nixd
             nixfmt
-            nodePackages.prettier
+            prettier
             procs
             rustup
             somafm-cli
             taplo
             tenv
+            terraform-docs
             terraform-ls
             toml-sort
             wget
@@ -71,35 +73,35 @@
             onActivation.cleanup = "zap";
             onActivation.upgrade = true;
             enable = true;
-            brews =
-              [ ]
-              ++ (
-                if config.system.primaryUser == "dan" then
-                  [
-                    # QMK toolchain
-                    # "osx-cross/arm/arm-gcc-bin"
-                    # "arm-none-eabi-gcc"
-                    # QMK nice to have (for other QMK boards and to silence warnings)
-                    "osx-cross/avr/avr-gcc"
-                    "avrdude"
-                    "dfu-programmer"
-                    "dfu-util"
-                    "dos2unix"
-                  ]
-                else
-                  [
-                    "snyk-cli"
-                  ]
-              );
+            brews = [
+              "dos2unix"
+            ]
+            ++ (
+              if config.system.primaryUser == "dan" then
+                [
+                  # QMK toolchain
+                  # "osx-cross/arm/arm-gcc-bin"
+                  # "arm-none-eabi-gcc"
+                  # QMK nice to have (for other QMK boards and to silence warnings)
+                  "osx-cross/avr/avr-gcc"
+                  "avrdude"
+                  "dfu-programmer"
+                  "dfu-util"
+                ]
+              else
+                [
+                  "snyk-cli"
+                ]
+            );
             casks = [
               # everywhere
               "1password"
               "alfred"
               "cardhop"
               "copilot-cli"
+              "deskpad"
               "fantastical"
               "firefox"
-              # "liteparse" what did I want this for???
               "marked-app"
               "moom"
               "steermouse"
@@ -236,13 +238,17 @@
           fonts.fontconfig.enable = true;
           home.extraActivationPath = with pkgs; [ nix ];
           home.packages = [ ];
-          home.sessionPath = [ "$HOME/.local/bin" ];
+          home.sessionPath = [
+            "$HOME/.local/bin"
+            "$HOME/bin"
+          ];
           home.sessionVariables = {
             EDITOR = "hx";
             HOMEBREW_AUTO_UPDATE_SECS = 50000;
             VISUAL = "hx";
           };
-          home.stateVersion = "24.11";
+          # home.stateVersion = "24.11";
+          home.stateVersion = "26.05";
           programs = {
             home-manager.enable = true;
             awscli.enable = true;
@@ -306,7 +312,6 @@
             };
             fd.enable = true;
             gh.enable = true;
-            gh.extensions = [ pkgs.gh-copilot ];
             git = {
               enable = true;
               ignores = [ ".DS_Store" ];
@@ -340,13 +345,26 @@
             ssh = {
               enable = true;
               enableDefaultConfig = false;
-              matchBlocks."*" = {
-                addKeysToAgent = "yes";
-                forwardAgent = true;
-                extraOptions = {
-                  UseKeychain = "yes";
-                };
+              settings."*" = {
+                AddKeysToAgent = "yes";
+                Compression = false;
+                ControlMaster = "no";
+                ControlPath = "~/.ssh/master-%r@%n:%p";
+                ControlPersist = "no";
+                ForwardAgent = true;
+                HashKnownHosts = false;
+                ServerAliveCountMax = 3;
+                ServerAliveInterval = 0;
+                UseKeychain = "yes";
+                UserKnownHostsFile = "~/.ssh/known_hosts";
               };
+              # foo = {
+              #   addKeysToAgent = "yes";
+              #   forwardAgent = true;
+              #   extraOptions = {
+              #     UseKeychain = "yes";
+              #   };
+              # };
             };
             uv.enable = true;
             vim = {
