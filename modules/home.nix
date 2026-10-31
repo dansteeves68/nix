@@ -151,6 +151,12 @@
       autosuggestion.enable = true;
       enableCompletion = true;
       defaultKeymap = "viins"; # emacs, vicmd, or viins
+      # Rex terminal: keep its bin dir first in PATH (empty outside Rex, so not in sessionPath)
+      initContent = ''
+        if [[ -n "$REX_BIN_DIR" ]]; then
+          export PATH="$REX_BIN_DIR:$PATH"
+        fi
+      '';
       history = {
         expireDuplicatesFirst = true;
         extended = true;
