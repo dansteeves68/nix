@@ -2,11 +2,11 @@
   description = "Dan's latest dotfiles flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nix-darwin.url = "github:LnL7/nix-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
+    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-26.05";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -33,6 +33,7 @@
             coreutils
             curl
             dust
+            ffmpeg
             gawk
             gnumake
             gnused
@@ -61,6 +62,7 @@
             toml-sort
             wget
             yaml-language-server
+            yt-dlp
           ];
           fonts.packages = with pkgs; [
             nerd-fonts.anonymice
@@ -83,7 +85,7 @@
                   # "osx-cross/arm/arm-gcc-bin"
                   # "arm-none-eabi-gcc"
                   # QMK nice to have (for other QMK boards and to silence warnings)
-                  "osx-cross/avr/avr-gcc"
+                  # "osx-cross/avr/avr-gcc"
                   "avrdude"
                   "dfu-programmer"
                   "dfu-util"
