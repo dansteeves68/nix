@@ -1,4 +1,4 @@
-{ machine, pkgs, ... }:
+{ pkgs, ... }:
 {
   fonts.fontconfig.enable = true;
   home.extraActivationPath = with pkgs; [ nix ];
@@ -94,8 +94,8 @@
         push.default = "simple";
         push.followTags = true;
         tag.sort = "version:refname";
-        user.email = machine.git.email;
-        user.name = machine.git.username;
+        user.email = "dan@thesteeves.org";
+        user.name = "dansteeves68";
       };
     };
     htop.enable = true;

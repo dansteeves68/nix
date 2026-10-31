@@ -19,56 +19,30 @@
       nixpkgs,
       ...
     }:
-    let
-      machines = {
-        LN7YNX3G7 = {
-          platform = "aarch64-darwin";
-          username = "c079373";
-          git = {
-            username = "dan-steeves_thrivent";
-            email = "dan.steeves@thrivent.com";
-          };
-        };
-        ibish = {
-          platform = "x86_64-darwin";
-          username = "dan";
-          git = {
-            username = "dansteeves68";
-            email = "dan@thesteeves.org";
-          };
-        };
-      };
-
-      mkDarwinConfig =
-        machine:
-        nix-darwin.lib.darwinSystem {
-          specialArgs = { inherit self machine; };
-          modules = [
-            ./modules/darwin.nix
-            ./modules/homebrew.nix
-            nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                enableRosetta = machine.platform != "x86_64-darwin";
-                user = machine.username;
-                autoMigrate = true;
-              };
-            }
-            home-manager.darwinModules.home-manager
-            {
-              home-manager = {
-                backupFileExtension = "backup";
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = { inherit machine; };
-                users.${machine.username} = ./modules/home.nix;
-              };
-            }
-          ];
-        };
-    in
     {
-      darwinConfigurations = builtins.mapAttrs (_: mkDarwinConfig) machines;
+      darwinConfigurations.ibish = nix-darwin.lib.darwinSystem {
+        specialArgs = { inherit self; };
+        modules = [
+          ./modules/darwin.nix
+          ./modules/homebrew.nix
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              enable = true;
+              user = "dan";
+              autoMigrate = true;
+            };
+          }
+          home-manager.darwinModules.home-manager
+          {
+            home-manager = {
+              backupFileExtension = "backup";
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.dan = ./modules/home.nix;
+            };
+          }
+        ];
+      };
     };
 }

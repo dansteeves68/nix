@@ -1,6 +1,5 @@
 {
   config,
-  machine,
   pkgs,
   self,
   ...
@@ -54,16 +53,16 @@
   ids.gids.nixbld = 30000;
   nix.enable = false; # false because using Determinate nix
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.hostPlatform = machine.platform;
+  nixpkgs.hostPlatform = "x86_64-darwin";
   programs.bash.enable = true;
   programs.zsh.enable = true;
   security.pam.services.sudo_local.touchIdAuth = true;
-  users.users.${machine.username} = {
+  users.users.dan = {
     description = "Dan Steeves";
-    home = "/Users/${machine.username}";
-    name = machine.username;
+    home = "/Users/dan";
+    name = "dan";
   };
-  system.primaryUser = machine.username;
+  system.primaryUser = "dan";
   system.activationScripts.applications.text = ''
     echo "setting up /Applications/Nix Apps..." >&2
     rm -rf /Applications/Nix\ Apps

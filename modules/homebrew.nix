@@ -1,7 +1,4 @@
-{ lib, machine, ... }:
-let
-  isPersonal = machine.username == "dan";
-in
+{ ... }:
 {
   homebrew = {
     enable = true;
@@ -10,8 +7,6 @@ in
     onActivation.upgrade = true;
     brews = [
       "dos2unix"
-    ]
-    ++ lib.optionals isPersonal [
       # QMK toolchain
       # "osx-cross/arm/arm-gcc-bin"
       # "arm-none-eabi-gcc"
@@ -20,30 +15,21 @@ in
       "avrdude"
       "dfu-programmer"
       "dfu-util"
-    ]
-    ++ lib.optionals (!isPersonal) [
-      "snyk-cli"
     ];
     casks = [
-      # everywhere
       "1password"
       "alfred"
       "cardhop"
+      "claude-code"
       "copilot-cli"
       "deskpad"
+      "discord"
       "fantastical"
       "firefox"
       "marked-app"
       "moom"
       "steermouse"
-    ]
-    ++ lib.optionals isPersonal [
-      "claude-code"
-      "discord"
       "ungoogled-chromium"
-    ]
-    ++ lib.optionals (!isPersonal) [
-      # work only
     ];
     taps = [
       "nrlquaker/createzap"
