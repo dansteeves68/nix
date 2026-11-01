@@ -2,6 +2,8 @@
 {
   fonts.fontconfig.enable = true;
   home.extraActivationPath = with pkgs; [ nix ];
+  # npm global installs go to ~/.local/bin instead of the read-only nix store
+  home.file.".npmrc".text = "prefix=\${HOME}/.local\n";
   home.packages = [ ];
   home.sessionPath = [
     "$HOME/.local/bin"

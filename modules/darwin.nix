@@ -31,6 +31,7 @@
     nil
     nixd
     nixfmt
+    nodejs # includes npm and npx
     prettier
     procs
     rustup
